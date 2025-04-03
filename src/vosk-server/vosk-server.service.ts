@@ -16,7 +16,10 @@ export class VoskServerService implements OnModuleInit, OnModuleDestroy {
     onModuleInit(): void {
         this.model = new vosk.Model('dist/model');
         this.speakerModel = new vosk.SpeakerModel('dist/model');
-        this.recognizer = new vosk.Recognizer<any>({model: this.model, sampleRate: 16000});
+        this.recognizer = new vosk.Recognizer<any>({
+            model: this.model,
+            sampleRate: 16000
+        });
     }
 
     async audioAppend(chunk: Buffer) {
@@ -38,11 +41,11 @@ export class VoskServerService implements OnModuleInit, OnModuleDestroy {
 
     async processAudio(chunk: Buffer) {
         // this.buffer = Buffer.concat([this.buffer, chunk]);
-            if (this.recognizer.acceptWaveform(chunk)) {
-                const text: recText = this.recognizer.result()
-                return text.text
-                //console.log(JSON.stringify(this.recognizer.finalResult(), null, 4));
-            }
+        this.recognizer.reset()
+        await this.recognizer.acceptWaveform(chunk);
+        const text = this.recognizer.result()
+        this.recognizer.reset()
+        return text
     }
 
     async tts(input: recText) {

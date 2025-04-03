@@ -34,6 +34,6 @@ export class VoskServerController {
         const audioBuffer = fs.readFileSync(fileName);
         const recognizedText = await this.voskService.processAudio(audioBuffer);
         fs.unlinkSync(fileName);
-        return { text: recognizedText };
+        return recognizedText;
     }
 }

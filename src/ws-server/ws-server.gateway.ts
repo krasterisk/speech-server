@@ -8,7 +8,7 @@ import {Logger} from "@nestjs/common";
 import {Server} from "socket.io";
 import {from, map, Observable} from "rxjs";
 
-@WebSocketGateway(3033,{
+@WebSocketGateway(3034,{
   cors: {
     origin: '*',
   },

@@ -45,7 +45,7 @@ export class RolesGuard implements CanActivate {
             if (e == 'TokenExpiredError: jwt expired') {
                 throw new HttpException({ message: 'TokenExpiredError' }, HttpStatus.FORBIDDEN)
             }
-            throw new HttpException('Access denied!' +e, HttpStatus.FORBIDDEN)
+            throw new HttpException('Access denied!', HttpStatus.FORBIDDEN)
         }
     }
 

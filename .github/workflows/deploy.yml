@@ -22,7 +22,7 @@ jobs:
       - name: Deploy to Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SPEECH_USER }}@${{ secrets.SPEECH_HOST }} << 'EOF'
-            cd /var/www/speech-server
+            cd /app/speech-server
             git pull
             docker compose down
             docker compose up --build -d

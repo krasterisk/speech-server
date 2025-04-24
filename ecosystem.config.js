@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
         {
-            name: "vosk_server_api",
+            name: "speech_server_api",
             script: "./dist/main.js",
             watch: false,
             env: {

@@ -1,4 +1,4 @@
-import {Injectable, OnModuleDestroy, OnModuleInit} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable, OnModuleDestroy, OnModuleInit} from '@nestjs/common';
 import * as vosk from 'vosk-koffi';
 
 interface recText {
@@ -40,12 +40,18 @@ export class VoskServerService implements OnModuleInit, OnModuleDestroy {
     }
 
     async processAudio(chunk: Buffer) {
-        // this.buffer = Buffer.concat([this.buffer, chunk]);
-        this.recognizer.reset()
-        await this.recognizer.acceptWaveform(chunk);
-        const text = this.recognizer.result()
-        this.recognizer.reset()
-        return text
+        try{
+            // this.buffer = Buffer.concat([this.buffer, chunk]);
+            this.recognizer.reset()
+            await this.recognizer.acceptWaveform(chunk);
+            const text = this.recognizer.result()
+            this.recognizer.reset()
+            return text
+        } catch (e) {
+            console.log("error recognize audio", e)
+            throw new HttpException('Error recognize audio', HttpStatus.NOT_FOUND)
+
+        }
     }
 
     async tts(input: recText) {

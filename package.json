@@ -1,6 +1,6 @@
 {
   "name": "krasterisk_speech_server",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "description": "Speech server for aiPBX",
   "author": "Krasterisk LTD",
   "private": true,
@@ -44,6 +44,7 @@
     "cross-env": "^7.0.3",
     "datagram-stream": "^1.1.1",
     "express": "^5.0.1",
+    "form-data": "^4.0.4",
     "fs": "^0.0.1-security",
     "mysql2": "^3.12.0",
     "node-wav": "^0.0.2",
@@ -71,6 +72,7 @@
     "@types/asterisk-manager": "^0.0.1",
     "@types/express": "^5.0.0",
     "@types/fluent-ffmpeg": "^2.1.27",
+    "@types/form-data": "^2.2.1",
     "@types/jest": "29.5.14",
     "@types/node": "^22.13.10",
     "@types/node-wav": "^0.0.3",

@@ -49,7 +49,7 @@ export class VoskServerService implements OnModuleInit, OnModuleDestroy {
             return text
         } catch (e) {
             console.log("error recognize audio", e)
-            throw new HttpException('Error recognize audio', HttpStatus.NOT_FOUND)
+            // throw new HttpException('Error recognize audio', HttpStatus.NOT_FOUND)
 
         }
     }

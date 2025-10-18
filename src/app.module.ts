@@ -10,6 +10,9 @@ import { VoskServerModule } from './vosk-server/vosk-server.module';
 import {SequelizeModule} from "@nestjs/sequelize";
 import {ServeStaticModule} from "@nestjs/serve-static";
 import {getMysqlConfig} from "./config/mysql.config";
+import { WhisperServerService } from './whisper-server/whisper-server.service';
+import { WhisperServerController } from './whisper-server/whisper-server.controller';
+import { WhisperServerModule } from './whisper-server/whisper-server.module';
 
 
 @Module({
@@ -28,7 +31,8 @@ import {getMysqlConfig} from "./config/mysql.config";
         AuthModule,
         FilesModule,
 //        WsServerModule,
-        VoskServerModule
+        VoskServerModule,
+        WhisperServerModule
     ]
 })
 

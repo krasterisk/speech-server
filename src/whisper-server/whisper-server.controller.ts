@@ -14,7 +14,7 @@ import { RolesGuard } from '../auth/roles.guard';
 import { WhisperServerService } from './whisper-server.service';
 
 @ApiTags('Whisper Server')
-@Controller('whisper-server')
+@Controller('whisper')
 export class WhisperServerController {
     constructor(private readonly whisperService: WhisperServerService) {}
 

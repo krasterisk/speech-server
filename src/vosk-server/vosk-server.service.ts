@@ -14,16 +14,12 @@ export class VoskServerService implements OnModuleInit, OnModuleDestroy {
     private readonly BUFFER_THRESHOLD = 8000; // Пороговый размер буфера в байтах (например, 8 KB)
 
     onModuleInit(): void {
-        // !!! Закомментировано так как мы используем Vosk в отдельном Docker контейнере
-        // Оставление этого кода вызывало бы падение Node.js из-за отсутствия папки dist/model
-        /*
         this.model = new vosk.Model('dist/model');
         this.speakerModel = new vosk.SpeakerModel('dist/model');
         this.recognizer = new vosk.Recognizer<any>({
             model: this.model,
             sampleRate: 16000
         });
-        */
     }
 
     async audioAppend(chunk: Buffer) {

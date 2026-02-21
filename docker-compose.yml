@@ -29,14 +29,6 @@ services:
         limits:
           memory: 1536M # Жесткий лимит ОЗУ, чтобы контейнер убивался до того, как повесит весь сервер
 
-  vosk:
-    image: alphacep/kaldi-ru:latest
-    restart: unless-stopped
-    ports:
-      - "2700:2700"
-    networks:
-      - app-network
-
 #  nginx:
 #    image: nginx:alpine
 #    restart: unless-stopped

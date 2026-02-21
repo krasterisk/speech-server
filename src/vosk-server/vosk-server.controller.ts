@@ -27,8 +27,17 @@ export class VoskServerController {
             throw new Error('No file uploaded');
         }
 
-        // We can pass the buffer directly to the Docker service without writing to disk
-        const recognizedText = await this.voskDockerService.processAudio(file.buffer);
+        const filePath = path.resolve(__dirname, '..', 'static')
+        if (!fs.existsSync(filePath)) {
+            fs.mkdirSync(filePath, { recursive: true })
+        }
+
+        const fileName = path.join(filePath, file.originalname);
+        fs.writeFileSync(fileName, file.buffer)
+
+        const audioBuffer = fs.readFileSync(fileName);
+        const recognizedText = await this.voskService.processAudio(audioBuffer);
+        fs.unlinkSync(fileName);
         return recognizedText;
     }
 

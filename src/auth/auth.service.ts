@@ -1,15 +1,15 @@
-import {HttpException, HttpStatus, Injectable, UnauthorizedException} from '@nestjs/common';
-import {CreateUserDto} from "../users/dto/create-user.dto";
-import {UsersService} from "../users/users.service";
-import {JwtService} from "@nestjs/jwt";
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { CreateUserDto } from "../users/dto/create-user.dto";
+import { UsersService } from "../users/users.service";
+import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from 'bcryptjs'
-import {User} from "../users/users.model";
+import { User } from "../users/users.model";
 
 @Injectable()
 export class AuthService {
 
     constructor(private userService: UsersService,
-                private jwtService: JwtService) {
+        private jwtService: JwtService) {
     }
 
     async login(userDto: CreateUserDto) {
@@ -25,7 +25,7 @@ export class AuthService {
             }
 
             const hashPassword = await bcrypt.hash(userDto.password, 5)
-            const user = await this.userService.create({...userDto, password: hashPassword})
+            const user = await this.userService.create({ ...userDto, password: hashPassword })
             return this.generateToken(user)
 
         } catch (e) {
@@ -34,7 +34,7 @@ export class AuthService {
     }
 
     private async generateToken(user: User) {
-        const payload = {username: user.username, email: user.email, id: user.id, avatar: user.avatar, designed: user.designed, vpbx_user_id: user.vpbx_user_id, roles: user.roles}
+        const payload = { username: user.username, email: user.email, id: user.id, vpbx_user_id: user.vpbx_user_id, roles: user.roles }
         return this.jwtService.sign(payload)
         // return {
         //     token: this.jwtService.sign(payload),
@@ -45,12 +45,12 @@ export class AuthService {
     private async validateUser(userDto: CreateUserDto) {
         const user = await this.userService.getUserByUsername(userDto.username)
         if (!user) {
-            throw new UnauthorizedException({message: 'Username or password is wrong!'})
+            throw new UnauthorizedException({ message: 'Username or password is wrong!' })
         }
         const passwordEquals = await bcrypt.compare(userDto.password, user.password)
         if (user && passwordEquals) {
             return user
         }
-        throw new UnauthorizedException({message: 'Username or password is wrong!'})
+        throw new UnauthorizedException({ message: 'Username or password is wrong!' })
     }
 }

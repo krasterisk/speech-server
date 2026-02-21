@@ -1,4 +1,4 @@
-import {HttpException, HttpStatus, Injectable, OnModuleDestroy, OnModuleInit} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import * as vosk from 'vosk-koffi';
 
 interface recText {
@@ -14,12 +14,16 @@ export class VoskServerService implements OnModuleInit, OnModuleDestroy {
     private readonly BUFFER_THRESHOLD = 8000; // Пороговый размер буфера в байтах (например, 8 KB)
 
     onModuleInit(): void {
+        // !!! Закомментировано так как мы используем Vosk в отдельном Docker контейнере
+        // Оставление этого кода вызывало бы падение Node.js из-за отсутствия папки dist/model
+        /*
         this.model = new vosk.Model('dist/model');
         this.speakerModel = new vosk.SpeakerModel('dist/model');
         this.recognizer = new vosk.Recognizer<any>({
             model: this.model,
             sampleRate: 16000
         });
+        */
     }
 
     async audioAppend(chunk: Buffer) {
@@ -32,15 +36,15 @@ export class VoskServerService implements OnModuleInit, OnModuleDestroy {
                 return text.text
                 //console.log(JSON.stringify(this.recognizer.finalResult(), null, 4));
             } else {
-  //              console.log(JSON.stringify(this.recognizer.partialResult(), null, 4));
+                //              console.log(JSON.stringify(this.recognizer.partialResult(), null, 4));
             }
             this.buffer = Buffer.alloc(0)
-//            console.log(JSON.stringify(this.recognizer.finalResult(), null, 4));
+            //            console.log(JSON.stringify(this.recognizer.finalResult(), null, 4));
         }
     }
 
     async processAudio(chunk: Buffer) {
-        try{
+        try {
             // this.buffer = Buffer.concat([this.buffer, chunk]);
             this.recognizer.reset()
             await this.recognizer.acceptWaveform(chunk);

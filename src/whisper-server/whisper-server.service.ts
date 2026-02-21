@@ -13,7 +13,7 @@ export interface WhisperOptions {
 
 @Injectable()
 export class WhisperServerService {
-    constructor(private readonly http: HttpService) {}
+    constructor(private readonly http: HttpService) { }
 
     async processAudio(
         buffer: Buffer,
@@ -43,7 +43,7 @@ export class WhisperServerService {
 
         if (initial_prompt) queryParams.append('initial_prompt', initial_prompt);
 
-        const url = `http://127.0.0.1:9000/asr?${queryParams.toString()}`;
+        const url = `http://whisper:9000/asr?${queryParams.toString()}`;
 
         try {
             const response = await firstValueFrom(

@@ -24,14 +24,10 @@ services:
       - OMP_NUM_THREADS=4
     networks:
       - app-network
-
-  vosk:
-    image: alphacep/kaldi-ru:latest
-    restart: unless-stopped
-    ports:
-      - "2700:2700"
-    networks:
-      - app-network
+    deploy:
+      resources:
+        limits:
+          memory: 1536M # Жесткий лимит ОЗУ, чтобы контейнер убивался до того, как повесит весь сервер
 
 #  nginx:
 #    image: nginx:alpine

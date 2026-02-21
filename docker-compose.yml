@@ -7,7 +7,6 @@ services:
     environment:
       - NODE_ENV=production
     volumes:
-      - ./:/app/speech-server
       - node_modules:/app/speech-server/node_modules
     ports:
       - "7001:7001"

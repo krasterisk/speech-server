@@ -1,14 +1,15 @@
-import {forwardRef, Module} from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { VoskServerService } from './vosk-server.service';
-import {VoskServerController} from "./vosk-server.controller";
-import {AuthModule} from "../auth/auth.module";
+import { VoskDockerService } from './vosk-docker.service';
+import { VoskServerController } from "./vosk-server.controller";
+import { AuthModule } from "../auth/auth.module";
 
 @Module({
   controllers: [VoskServerController],
-  providers: [VoskServerService],
-  exports: [VoskServerService],
+  providers: [VoskServerService, VoskDockerService],
+  exports: [VoskServerService, VoskDockerService],
   imports: [
     forwardRef(() => AuthModule)
   ],
 })
-export class VoskServerModule {}
+export class VoskServerModule { }

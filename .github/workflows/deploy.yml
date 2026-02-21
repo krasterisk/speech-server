@@ -20,7 +20,12 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.SPEECH_USER }}@${{ secrets.SPEECH_HOST }} << 'EOF'
             cd /var/www/speech-server
             git pull
+            cat << 'SCRIPT' > rebuild.sh
             docker compose down
             docker compose pull
-            docker compose up --build -d
+            rm -rf dist
+            docker compose build --no-cache nodejs
+            docker compose up -d
+            SCRIPT
+            bash rebuild.sh
           EOF

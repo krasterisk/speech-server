@@ -51,6 +51,7 @@ export class WhisperServerService {
                     headers: formData.getHeaders(),
                     maxContentLength: Infinity,
                     maxBodyLength: Infinity,
+                    timeout: 300000, // 5 минут — Whisper может долго обрабатывать большие файлы
                 }),
             );
 

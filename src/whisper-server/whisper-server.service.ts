@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import FormData from 'form-data';
@@ -59,8 +59,13 @@ export class WhisperServerService {
                 ? { text: response.data.text }
                 : response.data;
         } catch (err) {
-            console.error('Whisper recognition error:', err?.message || err);
-            throw new Error('Whisper recognition failed');
+            const status = err?.response?.status || 500;
+            const responseData = err?.response?.data || err?.message || 'Unknown error';
+            console.error(`Whisper recognition error [${status}]:`, responseData);
+            throw new HttpException(
+                `Whisper recognition failed: ${typeof responseData === 'string' ? responseData : JSON.stringify(responseData)}`,
+                status,
+            );
         }
     }
 }
